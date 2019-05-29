@@ -5,7 +5,6 @@ import {StyleSheet, Text, View, PermissionsAndroid} from 'react-native';
 import firebase from 'react-native-firebase';
 import reducers from './reducers'
 import firebaseConfig from './configeration/database';
-
 import CurrentPosition from './components/currentPosition';
 import RestaurantList from './components/restaurantList';
 
@@ -13,7 +12,7 @@ import RestaurantList from './components/restaurantList';
 
 export default class App extends Component{
     componentWillMount() {
-        // firebase.app(firebaseConfig);
+        firebase.app(firebaseConfig);
     }
     componentDidMount() {
     }
