@@ -1,0 +1,1 @@
+export const POSITION_CHANGED = 'position_changed';
