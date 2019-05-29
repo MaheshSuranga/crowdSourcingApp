@@ -25,6 +25,7 @@ project.xcworkspace
 # Android/IntelliJ
 #
 build/
+google-services.json
 .idea
 .gradle
 local.properties
@@ -36,7 +37,6 @@ node_modules/
 npm-debug.log
 yarn-error.log
 configeration/
-/media/mahesh/New Volume1/Semester 7 works/Mobile Computing/crowdSourcingApp/android/app/google-services.json
 
 # BUCK
 buck-out/
