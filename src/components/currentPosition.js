@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, PermissionsAndroid} from 'react-native';
+import {StyleSheet, Text, View, Image, PermissionsAndroid} from 'react-native';
 import {connect} from 'react-redux';
-import {currentPositionChanged} from '../actions'
+import {currentPositionChanged} from '../actions';
+import {CardSection} from './common'
 
 async function requestGpsPermission() {
   return new Promise((resolve, reject) => {
@@ -51,11 +52,21 @@ class CurrentPosition extends Component{
   
     render() {
       return (
-        <View style= {styles.container}>
-          <Text>Your Current Location is at here : </Text>
-          {!!this.props.position && <Text>lattitude: {this.props.position.coords.latitude}</Text>}
-          {!!this.props.position && <Text>longitude: {this.props.position.coords.longitude}</Text>}
-        </View>
+        <CardSection>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View>
+              <Image
+                style={styles.thumbnailStyle} 
+                source={{uri: 'https://png.pngtree.com/png-clipart/20190516/original/pngtree-location-pin-icon-png-image_3566846.jpg'}}
+              />
+            </View>
+            <View style= {styles.container}>
+              <Text>Your Current Location is at here : </Text>
+              {!!this.props.position && <Text>lattitude: {this.props.position.coords.latitude}</Text>}
+              {!!this.props.position && <Text>longitude: {this.props.position.coords.longitude}</Text>}
+            </View> 
+          </View>     
+        </CardSection>
       );
     }
   }
@@ -66,7 +77,11 @@ class CurrentPosition extends Component{
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
-    }
+    },
+    thumbnailStyle: {
+      height: 50,
+      width: 50
+  }
   });
 
   const mapStateToProps = ({gps}) => {
