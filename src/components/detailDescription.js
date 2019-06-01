@@ -3,6 +3,9 @@ import {Text, View, ScrollView, Image} from 'react-native'
 import {CardSection, Card,Header} from './common'
 
 class DetailDescription extends Component {
+    componentWillMount() {
+        console.log(this.props.details)
+    }
     render() {
         console.log("detail component rendered")
         const {imageStyle} = styles;
@@ -17,7 +20,7 @@ class DetailDescription extends Component {
                                 source={{uri: this.props.details[1].image}}
                             />
                         </CardSection>
-                        <CardSection>
+                        <CardSection style={{flexDirection: 'column'}}>
                             <View><Text>No. Of people: approximately {this.props.details[1].count}</Text></View>
                             <View><Text>Noise Level:  DB</Text></View>
                             <View><Text>Temperetaure:  Celcius {this.props.details[1].count}</Text></View>

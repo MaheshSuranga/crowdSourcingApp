@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Card, CardSection} from './common';
 import DetailDescription from './detailDescription';
+import {Actions} from 'react-native-router-flux';
 
-const onPress = (restaurantDetailArray) => <DetailDescription key={restaurantDetailArray[0]} details={restaurantDetailArray}/>
+const onPress = (restaurantDetailArray) => {Actions.main({details:restaurantDetailArray})}
 
 class RestaurantDetail extends Component {
     
