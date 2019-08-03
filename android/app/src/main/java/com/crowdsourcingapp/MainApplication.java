@@ -3,6 +3,8 @@ package com.crowdsourcingapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.ocetnik.timer.BackgroundTimerPackage;
+import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BackgroundTimerPackage(),
+            new BackgroundTaskPackage(),
           new RNFirebasePackage(),
           new RNFirebaseDatabasePackage()
       );
@@ -45,5 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    BackgroundTaskPackage.useContext(this);
+    // BackgroundTimerPackage.useContext(this);
   }
 }

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 export default (state=INITIAL_STATE, action) => {
     switch(action.type) {
         case RESTAURANTS_FETCH_SUCCESS:
+            console.log("fetch succcess in action")
             return {...state, restaurantDetails: action.payload}
         default:
             return state

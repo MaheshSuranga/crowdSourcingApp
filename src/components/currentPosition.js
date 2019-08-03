@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, PermissionsAndroid} from 'react-native';
 import {connect} from 'react-redux';
 import {currentPositionChanged} from '../actions';
-import {CardSection} from './common'
+import {CardSection} from './common';
 
 async function requestGpsPermission() {
   return new Promise((resolve, reject) => {
@@ -48,6 +48,7 @@ class CurrentPosition extends Component{
             console.log('GPS permission denied')
           }
         })
+
     }
   
     render() {
