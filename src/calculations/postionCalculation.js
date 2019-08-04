@@ -1,10 +1,12 @@
 import {updateRestaurant, updateRestaurantSensorDataOnly, updateCurrentPlace} from '../actions';
+import {store} from '../App';
 
-const currentPlace=[null];
-const previousPlace=null;
+// const currentPlace=[null];
+// const previousPlace=null;
 
 export const checkPlace = (restaurantDetail, currentPosition, sensorData) => {
-    console.log(restaurantDetail[1].position.longitude, currentPosition);
+    const currentPlace = store.getState().gps.currentPlace
+    console.log("((((((((",restaurantDetail[1].position.longitude, currentPosition, store.getState().gps);
     restaurantLong = restaurantDetail[1].position.longitude;
     restaurantLat = restaurantDetail[1].position.latitude;
 
@@ -22,14 +24,13 @@ export const checkPlace = (restaurantDetail, currentPosition, sensorData) => {
         console.log('Place '+currentPlace + restaurantDetail[0]);
         if(restaurantDetail[0] != currentPlace) {
             console.log("i am in "+ restaurantDetail[0]);
-            updateRestaurant(restaurantDetail[0], restaurantDetail[1], currentPlace[0], sensorData).then(value => {
+            updateRestaurant(restaurantDetail[0], restaurantDetail[1], currentPlace, sensorData).then(value => {
                 console.log('return value'+ value);
-                currentPlace[0] = value;
                 updateCurrentPlace(value);
             });
         } else {
             console.log("i am in same "+ restaurantDetail[0]);
-            updateRestaurantSensorDataOnly(restaurantDetail[0], restaurantDetail[1], currentPlace[0], sensorData).then(value => {
+            updateRestaurantSensorDataOnly(restaurantDetail[0], restaurantDetail[1], currentPlace, sensorData).then(value => {
                 console.log('return value'+ value);
                 updateCurrentPlace(value);
             });

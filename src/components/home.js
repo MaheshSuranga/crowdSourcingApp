@@ -14,11 +14,8 @@ class Home extends Component{
     const intervalId = BackgroundTimer.setInterval(() => {
       console.log('tic');
       console.log("sesnor state", this.props.sensorData)
-      sensorReading(this.props.mikePermission).then(value => {
-        if(value) {
-          !!this.props.restaurantDetails && Object.entries(this.props.restaurantDetails).map(restaurant => checkPlace(restaurant,this.props.position.coords, value))
-        }
-      })
+      sensorReading(this.props.mikePermission)
+      !!this.props.restaurantDetails && Object.entries(this.props.restaurantDetails).map(restaurant => checkPlace(restaurant,this.props.position.coords, this.props.sensorData))
     }, 5000);
     // BackgroundTimer.clearInterval(intervalId);
   }

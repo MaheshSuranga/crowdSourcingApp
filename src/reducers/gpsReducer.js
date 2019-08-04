@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     position: null,
     mikePermission: false,
     sensorData: '',
-    currentPlace: '',
+    currentPlace: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
