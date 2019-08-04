@@ -1,9 +1,9 @@
-import {updateRestaurant} from '../actions';
+import {updateRestaurant, updateRestaurantSensorDataOnly, updateCurrentPlace} from '../actions';
 
 const currentPlace=[null];
 const previousPlace=null;
 
-export const checkPlace = (restaurantDetail, currentPosition) => {
+export const checkPlace = (restaurantDetail, currentPosition, sensorData) => {
     console.log(restaurantDetail[1].position.longitude, currentPosition);
     restaurantLong = restaurantDetail[1].position.longitude;
     restaurantLat = restaurantDetail[1].position.latitude;
@@ -22,13 +22,17 @@ export const checkPlace = (restaurantDetail, currentPosition) => {
         console.log('Place '+currentPlace + restaurantDetail[0]);
         if(restaurantDetail[0] != currentPlace) {
             console.log("i am in "+ restaurantDetail[0]);
-            updateRestaurant(restaurantDetail[0], restaurantDetail[1], currentPlace[0]).then(value => {
+            updateRestaurant(restaurantDetail[0], restaurantDetail[1], currentPlace[0], sensorData).then(value => {
                 console.log('return value'+ value);
                 currentPlace[0] = value;
+                updateCurrentPlace(value);
             });
         } else {
-            return console.log("i am in same"+ restaurantDetail[0]);
-            // return updateRestaurant(restaurantDetail[0], restaurantDetail[1], currentPlace);
+            console.log("i am in same "+ restaurantDetail[0]);
+            updateRestaurantSensorDataOnly(restaurantDetail[0], restaurantDetail[1], currentPlace[0], sensorData).then(value => {
+                console.log('return value'+ value);
+                updateCurrentPlace(value);
+            });
         }      
     }else {
         return console.log("i am not in here");

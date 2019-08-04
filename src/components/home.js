@@ -1,20 +1,25 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, DeviceEventEmitter} from 'react-native';
 import {connect} from 'react-redux';
 import CurrentPosition from './currentPosition';
 import RestaurantList from './restaurantList';
 import BackgroundTimer from 'react-native-background-timer';
 import {checkPlace} from '../calculations/postionCalculation'
 
+import {sensorReading} from '../calculations/sensorManager';
 
 class Home extends Component{
   
   componentDidMount() {
     const intervalId = BackgroundTimer.setInterval(() => {
       console.log('tic');
-      !!this.props.restaurantDetails && Object.entries(this.props.restaurantDetails).map(restaurant => checkPlace(restaurant,this.props.position.coords))
+      console.log("sesnor state", this.props.sensorData)
+      sensorReading(this.props.mikePermission).then(value => {
+        if(value) {
+          !!this.props.restaurantDetails && Object.entries(this.props.restaurantDetails).map(restaurant => checkPlace(restaurant,this.props.position.coords, value))
+        }
+      })
     }, 5000);
-
     // BackgroundTimer.clearInterval(intervalId);
   }
     render() {
@@ -39,10 +44,10 @@ class Home extends Component{
   });
 
   const mapStateToProps = ({gps, restaurants}) => {
-    const {position} = gps;
+    const {position, mikePermission, sensorData} = gps;
     const {restaurantDetails} = restaurants;
 
-    return {position, restaurantDetails};
+    return {position, restaurantDetails, mikePermission, sensorData};
   };
 
   export default connect(mapStateToProps) (Home);

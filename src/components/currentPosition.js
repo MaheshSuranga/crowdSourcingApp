@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, PermissionsAndroid} from 'react-native';
 import {connect} from 'react-redux';
-import {currentPositionChanged} from '../actions';
+import {currentPositionChanged, mikePermissionGained} from '../actions';
 import {CardSection} from './common';
 
 async function requestGpsPermission() {
@@ -26,10 +26,32 @@ async function requestGpsPermission() {
   })
 }
 
+const requestRecordAudioPermission = async (mikePermissionGained) => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+      {
+        'title': 'Record Audio Permission',
+        'message': 'This App needs permission to record audio ' +
+                   'so the loudness can be properly displayed.'
+      }
+    )
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("You can record audio")
+      mikePermissionGained(true);
+    } else {
+      console.log("Record audio permission denied")
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
+
+
 class CurrentPosition extends Component{
 
     componentWillMount(){
-       
+    
     }
     componentDidMount() {
         requestGpsPermission().then(permission => {
@@ -49,9 +71,11 @@ class CurrentPosition extends Component{
           }
         })
 
+        requestRecordAudioPermission(this.props.mikePermissionGained);
     }
   
     render() {
+      console.log("curent Place $$$$$$$$$$$$$", this.props.currentPlace)
       return (
         <CardSection>
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -63,6 +87,7 @@ class CurrentPosition extends Component{
             </View>
             <View style= {styles.container}>
               <Text>Your Current Location is at here : </Text>
+              {!!this.props.currentPlace && <Text style={styles.placeText}>{this.props.currentPlace}</Text>}
               {!!this.props.position && <Text>lattitude: {this.props.position.coords.latitude}</Text>}
               {!!this.props.position && <Text>longitude: {this.props.position.coords.longitude}</Text>}
             </View> 
@@ -82,14 +107,19 @@ class CurrentPosition extends Component{
     thumbnailStyle: {
       height: 50,
       width: 50
-  }
+    },
+    placeText: {
+      fontWeight: 'bold',
+      fontSize: 20,
+      color: 'magenta'
+    }
   });
 
   const mapStateToProps = ({gps}) => {
-    const {position} = gps;
+    const {position, currentPlace} = gps;
 
-    return {position};
+    return {position, currentPlace};
   };
 
-  export default connect(mapStateToProps, {currentPositionChanged}) (CurrentPosition);
+  export default connect(mapStateToProps, {currentPositionChanged, mikePermissionGained}) (CurrentPosition);
   
